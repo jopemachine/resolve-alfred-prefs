@@ -15,29 +15,21 @@ module.exports = async () => {
 	let errorMessage;
 
 	try {
-		const prefsPath = JSON.parse(fs.readFileSync(prefsJsonPath)).current;
+		console.log("@@ test 1", prefsJsonPath);
+		
+		const settingFile = fs.readFileSync(prefsJsonPath);
+
+		console.log("@@ test 2", settingFile);
+
+		const prefsPath = JSON.parse(settingFile).current;
+		
+		console.log("@@ test 3", prefsPath);
 
 		return {
 			path: prefsPath
 		};
 	} catch (error) {
 		errorMessage = `Alfred preferences not found at location ${prefsJsonPath}`;
-	}
-
-	try {
-		data = await bplist.parseFile(settings);
-
-		const syncfolder = data[0].syncfolder || '~/Library/Application Support/Alfred 3';
-		const prefsPath = untildify(`${syncfolder}/Alfred.alfredpreferences`);
-
-		return {
-			version: 3,
-			path: prefsPath
-		};
-	} catch (error) {
-		if (error.code === 'EACCES') {
-			errorMessage = `Permission denied to read Alfred preferences at location ${settings}`;
-		}
 	}
 
 	if (errorMessage) {
