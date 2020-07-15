@@ -15,13 +15,14 @@ module.exports = async () => {
 	let errorMessage;
 
 	try {
-		console.log("@@ test 1", prefsJsonPath);
+		console.log("updated.");
+		console.log("@@ test 1..", prefsJsonPath);
 		
-		const settingFile = fs.readFileSync(prefsJsonPath);
+		const settingFile = require(prefsJsonPath);
 
 		console.log("@@ test 2", settingFile);
 
-		const prefsPath = JSON.parse(settingFile).current;
+		const prefsPath = settingFile.current;
 		
 		console.log("@@ test 3", prefsPath);
 
